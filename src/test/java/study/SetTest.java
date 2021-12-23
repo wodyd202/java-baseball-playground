@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashSet;
@@ -39,5 +40,22 @@ public class SetTest {
     @DisplayName("set에 해당 원소가 존재하는지 확인한다.")
     void contains(int number){
         assertThat(numbers.contains(number)).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "1:true",
+            "2:true",
+            "3:true",
+            "4:false",
+            "5:false"
+    }, delimiter = ':')
+    @DisplayName("contains 호춤시 1,2,3을 입력했을 경우 true, 4,5를 입력했을 경우 false를 반환한다.")
+    void contains_2(int value, boolean expected){
+        // when
+        boolean contains = numbers.contains(value);
+
+        // then
+        assertThat(contains).isEqualTo(expected);
     }
 }
