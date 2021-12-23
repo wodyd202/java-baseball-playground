@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class StringTest {
 
@@ -59,5 +60,44 @@ public class StringTest {
 
         // then
         assertThat(result).isEqualTo("1,2");
+    }
+
+    @Test
+    @DisplayName("chatAt을 통해 abc 문자열중 1번째 위치의 문자를 가져옴")
+    void charAt(){
+        // given
+        String fixture = "abc";
+
+        // when
+        char charAtResult = fixture.charAt(1);
+
+        // then
+        assertThat(charAtResult).isEqualTo('b');
+    }
+
+    @Test
+    @DisplayName("abc 문자열중 4번째 위치의 문자를 가져올 경우 StringIndexOutOfBoundsException 발생")
+    void chatAtStringIndexOutOfBoundsException_1(){
+        // given
+        String fixture = "abc";
+
+        // when
+        assertThatExceptionOfType(StringIndexOutOfBoundsException.class)
+        .isThrownBy(()->{
+            fixture.charAt(4);
+        });
+    }
+
+    @Test
+    @DisplayName("charAt 함수에 음수 값을 넣을 경우 StringIndexOutOfBoundsException 발생")
+    void chatAtStringIndexOutOfBoundsException_2(){
+        // given
+        String fixture = "abc";
+
+        // when
+        assertThatExceptionOfType(StringIndexOutOfBoundsException.class)
+        .isThrownBy(()->{
+            fixture.charAt(-1);
+        });
     }
 }
