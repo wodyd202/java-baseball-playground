@@ -1,10 +1,10 @@
 package study;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StringTest {
 
@@ -44,5 +44,20 @@ public class StringTest {
 
         // then
         assertThat(split).containsExactly("1");
+    }
+
+    @Test
+    @DisplayName("substring을 통해 (1,2) 문자열의 괄호 제거")
+    void substring(){
+        // given
+        String fixture = "(1,2)";
+
+        // when
+        int frontBracketIdx = fixture.indexOf("(");
+        int backBracketIdx = fixture.indexOf(")");
+        String result = fixture.substring(frontBracketIdx + 1, backBracketIdx);
+
+        // then
+        assertThat(result).isEqualTo("1,2");
     }
 }
