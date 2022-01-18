@@ -36,23 +36,18 @@ enum Operator {
     String operation(String firstOperand, String secondOperand) {
         double convertFirstOperand = Double.parseDouble(firstOperand);
         double convertSecondOperand =  Double.parseDouble(secondOperand);
-        double result = 0.0;
         switch (this){
             case PLUS:
-                result = convertFirstOperand + convertSecondOperand;
-                break;
+                return resultToString(convertFirstOperand + convertSecondOperand);
             case MINUS:
-                result = convertFirstOperand - convertSecondOperand;
-                break;
+                return resultToString(convertFirstOperand - convertSecondOperand);
             case DIV:
                 verifyNotZero(convertFirstOperand);
-                result = convertSecondOperand / convertFirstOperand;
-                break;
+                return resultToString(convertSecondOperand / convertFirstOperand);
             case MUL:
-                result = convertFirstOperand * convertSecondOperand;
-                break;
+                return resultToString(convertFirstOperand * convertSecondOperand);
         }
-        return Double.toString(result);
+        return null;
     }
 
     private static final int ZERO = 0;
@@ -60,5 +55,9 @@ enum Operator {
         if(convertFirstOperand == ZERO){
             throw new IllegalArgumentException();
         }
+    }
+
+    private String resultToString(double result){
+        return Double.toString(result);
     }
 }
