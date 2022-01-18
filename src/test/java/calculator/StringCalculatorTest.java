@@ -1,8 +1,5 @@
 package calculator;
 
-import calculator.Operation;
-import calculator.StringCalculator;
-import calculator.StringCalculatorStack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,14 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class StringCalculatorTest {
 
     @Test
-    @DisplayName("+ 연산자를 입력받았을 경우 Operation.PLUS를 반환함")
+    @DisplayName("+ 연산자를 입력받았을 경우 Operator.PLUS를 반환함")
     void charOfPlus(){
         // when
         String plus = "+";
-        Operation operation = Operation.tokenOf(plus);
+        Operator operation = Operator.tokenOf(plus);
 
         // then
-        assertEquals(operation, Operation.PLUS);
+        assertEquals(operation, Operator.PLUS);
     }
 
     @Test
@@ -31,36 +28,36 @@ public class StringCalculatorTest {
         String minus = "-";
 
         // then
-        Operation operation = Operation.tokenOf(minus);
+        Operator operation = Operator.tokenOf(minus);
 
         // then
-        assertEquals(operation, Operation.MINUS);
+        assertEquals(operation, Operator.MINUS);
     }
 
     @Test
-    @DisplayName("/ 연산자를 입력받았을 경우 Operation.DIV를 반환함")
+    @DisplayName("/ 연산자를 입력받았을 경우 Operator.DIV를 반환함")
     void charOfDiv(){
         // when
         String div = "/";
 
         // then
-        Operation operation = Operation.tokenOf(div);
+        Operator operation = Operator.tokenOf(div);
 
         // then
-        assertEquals(operation, Operation.DIV);
+        assertEquals(operation, Operator.DIV);
     }
 
     @Test
-    @DisplayName("* 연산자를 입력받았을 경우 Operation.MUL을 반환함")
+    @DisplayName("* 연산자를 입력받았을 경우 Operator.MUL을 반환함")
     void charOfMul(){
         // when
         String mul = "*";
 
         // then
-        Operation operation = Operation.tokenOf(mul);
+        Operator operation = Operator.tokenOf(mul);
 
         // then
-        assertEquals(operation, Operation.MUL);
+        assertEquals(operation, Operator.MUL);
     }
 
     @Test
@@ -70,10 +67,10 @@ public class StringCalculatorTest {
         String number = "1";
 
         // then
-        Operation operation = Operation.tokenOf(number);
+        Operator operation = Operator.tokenOf(number);
 
         // then
-        assertEquals(operation, Operation.NOT_OPERAION);
+        assertEquals(operation, Operator.NOT_OPERATOR);
     }
 
     @Test
@@ -126,6 +123,28 @@ public class StringCalculatorTest {
         // when
         assertThrows(IllegalArgumentException.class,()->{
             stringCalculatorStack.push("-");
+        });
+    }
+
+    @Test
+    @DisplayName("0으로 나눌 경우 에러")
+    void divZero(){
+        // given
+        Operator operator = Operator.DIV;
+
+        // when
+        assertThrows(IllegalArgumentException.class,()->{
+            operator.operation("0", "1");
+        });
+    }
+
+    @Test
+    @DisplayName("입력 받은 토큰이 숫자도 아니고 연산자도 아닐 경우 에러 발생")
+    void inputNotOperatorAndNumber(){
+        // when
+        StringCalculatorValidator stringCalculatorValidator = new StringCalculatorValidator();
+        assertThrows(IllegalArgumentException.class, ()->{
+            stringCalculatorValidator.verifyCurrentTokenNumberOrOperator(Operator.NOT_OPERATOR, "notNumber");
         });
     }
 

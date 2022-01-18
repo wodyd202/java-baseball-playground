@@ -9,7 +9,7 @@ final class StringCalculatorStack {
         return stack.isEmpty();
     }
     String peek() {
-        return stack.peek();
+        return isEmpty() ? null : stack.peek();
     }
 
     long getResult() {
@@ -25,21 +25,27 @@ final class StringCalculatorStack {
     }
 
     private void validation(final String token) {
-        Operation operation = Operation.tokenOf(token);
-        if(operation.isNumber() && peekIsNumber()){
+        if(isNumber(token) && isNumber(peek())){
             throw new IllegalArgumentException();
         }
-        if(operation.isOperator() && (stack.isEmpty() || peekIsOperator())){
+
+        Operator operator = Operator.tokenOf(token);
+        if(operator.isOperator() && (stack.isEmpty() || peekIsOperator())){
             throw new IllegalArgumentException();
         }
     }
 
-    private boolean peekIsNumber(){
-        return !isEmpty() && Operation.tokenOf(peek()).isNumber();
+    private boolean isNumber(String operator){
+        try{
+            Integer.parseInt(operator);
+            return true;
+        }catch (NumberFormatException e){
+            return false;
+        }
     }
 
     private boolean peekIsOperator(){
-        return !isEmpty() && Operation.tokenOf(peek()).isOperator();
+        return !isEmpty() && Operator.tokenOf(peek()).isOperator();
     }
 
     void operation(final String targetOperend) {
@@ -47,7 +53,7 @@ final class StringCalculatorStack {
             push(targetOperend);
             return;
         }
-        Operation operator = Operation.tokenOf(stack.pop());
+        Operator operator = Operator.tokenOf(stack.pop());
         String operand = stack.pop();
         String result = operator.operation(targetOperend, operand);
         stack.push(result);

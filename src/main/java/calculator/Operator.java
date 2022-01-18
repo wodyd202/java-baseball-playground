@@ -6,16 +6,16 @@ import java.util.function.Function;
 
 import static java.util.stream.Collectors.toMap;
 
-enum Operation {
+enum Operator {
     PLUS("+"),
     MINUS("-"),
     DIV("/"),
     MUL("*"),
-    NOT_OPERAION("");
+    NOT_OPERATOR("");
 
     private String value;
 
-    Operation(String value) {
+    Operator(String value) {
         this.value = value;
     }
 
@@ -23,17 +23,14 @@ enum Operation {
         return value;
     }
 
-    private static Map<String, Operation> operationMap = Arrays.stream(values())
-                                                        .collect(toMap(Operation::getValue, Function.identity()));
-    static Operation tokenOf(String value) {
-        return operationMap.getOrDefault(value, NOT_OPERAION);
+    private static Map<String, Operator> operationMap = Arrays.stream(values())
+                                                        .collect(toMap(Operator::getValue, Function.identity()));
+    static Operator tokenOf(String value) {
+        return operationMap.getOrDefault(value, NOT_OPERATOR);
     }
 
     boolean isOperator() {
-        return !equals(NOT_OPERAION);
-    }
-    boolean isNumber() {
-        return !isOperator();
+        return !equals(NOT_OPERATOR);
     }
 
     String operation(String firstOperand, String secondOperand) {
@@ -48,6 +45,7 @@ enum Operation {
                 result = convertFirstOperand - convertSecondOperand;
                 break;
             case DIV:
+                verifyNotZero(convertFirstOperand);
                 result = convertSecondOperand / convertFirstOperand;
                 break;
             case MUL:
@@ -55,5 +53,11 @@ enum Operation {
                 break;
         }
         return Integer.toString(result);
+    }
+
+    private void verifyNotZero(int convertFirstOperand) {
+        if(convertFirstOperand == 0){
+            throw new IllegalArgumentException();
+        }
     }
 }
