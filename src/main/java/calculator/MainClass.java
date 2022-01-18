@@ -9,7 +9,7 @@ public class MainClass {
         StringCalculator stringCalculator = new StringCalculator();
         String input = scanner.nextLine();
 
-        long result = stringCalculator.calculte(input);
+        double result = stringCalculator.calculte(input);
         System.out.println(result);
     }
 }

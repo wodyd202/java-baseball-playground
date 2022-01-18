@@ -158,7 +158,7 @@ public class StringCalculatorTest {
     }, delimiter = ':')
     void calculte(String input, int expectedResult){
         // when
-        long result = calculator.calculte(input);
+        double result = calculator.calculte(input);
 
         // then
         assertEquals(result, expectedResult);

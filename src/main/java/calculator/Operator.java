@@ -34,9 +34,9 @@ enum Operator {
     }
 
     String operation(String firstOperand, String secondOperand) {
-        int convertFirstOperand = Integer.parseInt(firstOperand);
-        int convertSecondOperand = Integer.parseInt(secondOperand);
-        int result = 0;
+        double convertFirstOperand = Double.parseDouble(firstOperand);
+        double convertSecondOperand =  Double.parseDouble(secondOperand);
+        double result = 0.0;
         switch (this){
             case PLUS:
                 result = convertFirstOperand + convertSecondOperand;
@@ -52,11 +52,12 @@ enum Operator {
                 result = convertFirstOperand * convertSecondOperand;
                 break;
         }
-        return Integer.toString(result);
+        return Double.toString(result);
     }
 
-    private void verifyNotZero(int convertFirstOperand) {
-        if(convertFirstOperand == 0){
+    private static final int ZERO = 0;
+    private void verifyNotZero(double convertFirstOperand) {
+        if(convertFirstOperand == ZERO){
             throw new IllegalArgumentException();
         }
     }

@@ -12,11 +12,11 @@ final class StringCalculatorStack {
         return isEmpty() ? null : stack.peek();
     }
 
-    long getResult() {
+    double getResult() {
         if(peekIsOperator()){
             throw new IllegalStateException();
         }
-        return Long.parseLong(stack.pop());
+        return Double.parseDouble(stack.pop());
     }
 
     void push(final String token) {

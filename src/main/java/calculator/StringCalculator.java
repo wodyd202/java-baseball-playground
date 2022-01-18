@@ -5,7 +5,7 @@ final public class StringCalculator {
     private final StringCalculatorStack stringCalculatorStack = new StringCalculatorStack();
 
     private static final String DELIMETER = " ";
-    public long calculte(final String input) {
+    public double calculte(final String input) {
         String[] tokenArr = input.split(DELIMETER);
         for (String token : tokenArr) {
             Operator targetOperator = Operator.tokenOf(token);
